@@ -12,23 +12,13 @@ class ScanPage extends StatefulWidget {
 }
 
 class _ScanPageState extends State<ScanPage> {
-  File pickedImage;
+  File pickedImage; // imageFile dele
 
   var result = '';
   bool isImageLoad = false;
 
-  Future getImageFromGallery() async {
-    var tempStore = await ImagePicker().getImage(source: ImageSource.gallery);
-
-    setState(() {
-      pickedImage = File(tempStore.path);
-      isImageLoad = true;
-    });
-  }
-
-  Future getImageFromCamera() async {
-    var tempStore = await ImagePicker().getImage(source: ImageSource.camera);
-
+  Future<void> getImageTotal(ImageSource source) async {
+    var tempStore = await ImagePicker().getImage(source: source);
     setState(() {
       pickedImage = File(tempStore.path);
       isImageLoad = true;
@@ -85,7 +75,7 @@ class _ScanPageState extends State<ScanPage> {
             ),
             IconButton(
               onPressed: () {
-                getImageFromCamera();
+                getImageTotal(ImageSource.camera);
               },
               icon: Icon(Icons.add_a_photo),
               iconSize: 25,
@@ -94,7 +84,7 @@ class _ScanPageState extends State<ScanPage> {
               icon: Icon(Icons.camera_roll_outlined),
               iconSize: 25,
               onPressed: () {
-                getImageFromGallery();
+                getImageTotal(ImageSource.gallery);
               },
             ),
           ],
